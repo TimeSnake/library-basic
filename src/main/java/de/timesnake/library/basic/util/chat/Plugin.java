@@ -10,6 +10,8 @@ public class Plugin {
     public static final Plugin NETWORK = new Plugin("Network", "BN");
     public static final Plugin TIME_COINS = new Plugin("Coins", "BSC");
     public static final Plugin DATABASE = new Plugin("Database", "MDB");
+    public static final Plugin PRIVATE_MESSAGES = new Plugin("Msg", "BPM");
+    public static final Plugin MAILS = new Plugin("Mails", "BMA");
 
     private final String name;
     private final String code;
