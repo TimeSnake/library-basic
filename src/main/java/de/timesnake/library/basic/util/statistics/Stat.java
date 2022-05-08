@@ -6,6 +6,85 @@ import java.util.Map;
 
 public abstract class Stat<Value> implements Comparator<Value> {
 
+    private final Boolean globalDisplay;
+
+    private final Type<Value> type;
+    private final String name;
+    private final String displayName;
+    private final Value defaultValue;
+
+    private final Integer displayIndex;
+    private final Integer displayLineIndex;
+    private final Integer globalDisplayIndex;
+    private final Integer globalDisplayLineIndex;
+
+    public Stat(Type<Value> type, String name, String displayName, Value defaultValue, Integer displayIndex,
+                Integer displayLineIndex, Boolean globalDisplay, Integer globalDisplayIndex,
+                Integer globalDisplayLineIndex) {
+        this.type = type;
+        this.name = name;
+        this.defaultValue = defaultValue;
+        this.displayName = displayName;
+        this.displayIndex = displayIndex;
+        this.displayLineIndex = displayLineIndex;
+        this.globalDisplay = globalDisplay;
+        this.globalDisplayIndex = globalDisplayIndex;
+        this.globalDisplayLineIndex = globalDisplayLineIndex;
+    }
+
+    public Stat(Type<Value> type, String name, String displayName, Value defaultValue) {
+        this(type, name, displayName, defaultValue, null, null, null,
+                null, null);
+    }
+
+    public Boolean getGlobalDisplay() {
+        return globalDisplay;
+    }
+
+    public Type<Value> getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Value getDefaultValue() {
+        return defaultValue;
+    }
+
+    public String getDefaultValueAsString() {
+        return this.type.valueToString(this.defaultValue);
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public Integer getDisplayIndex() {
+        return displayIndex;
+    }
+
+    public Integer getDisplayLineIndex() {
+        return displayLineIndex;
+    }
+
+    public String getValueAsString(Value value) {
+        return this.type.valueToString(value);
+    }
+
+    public String getValueAsDisplay(Value value) {
+        return this.type.valueToDisplay(value);
+    }
+
+    public Integer getGlobalDisplayIndex() {
+        return globalDisplayIndex;
+    }
+
+    public Integer getGlobalDisplayLineIndex() {
+        return globalDisplayLineIndex;
+    }
+
     public static abstract class Type<ValueType> {
 
         public static final Map<String, Type<?>> TYPES_BY_NAME = new HashMap<>();
@@ -49,8 +128,11 @@ public abstract class Stat<Value> implements Comparator<Value> {
             }
 
             @Override
-            public Stat<Integer> asStat(String name, String displayName, Object defaultValue, Integer displayIndex, Integer displayLineIndex) {
-                return new Stat<>(this, name, displayName, ((Integer) defaultValue), displayIndex, displayLineIndex) {
+            public Stat<Integer> asStat(String name, String displayName, Object defaultValue, Integer displayIndex,
+                                        Integer displayLineIndex, Boolean globalDisplay, Integer globalDisplayIndex,
+                                        Integer globalDisplayLineIndex) {
+                return new Stat<>(this, name, displayName, ((Integer) defaultValue), displayIndex, displayLineIndex,
+                        globalDisplay, globalDisplayIndex, globalDisplayLineIndex) {
                     @Override
                     public Integer add(Integer value, Integer add) {
                         return value + add;
@@ -102,8 +184,11 @@ public abstract class Stat<Value> implements Comparator<Value> {
             }
 
             @Override
-            public Stat<Double> asStat(String name, String displayName, Object defaultValue, Integer displayIndex, Integer displayLineIndex) {
-                return new Stat<>(this, name, displayName, ((Double) defaultValue), displayIndex, displayLineIndex) {
+            public Stat<Double> asStat(String name, String displayName, Object defaultValue, Integer displayIndex,
+                                       Integer displayLineIndex, Boolean globalDisplay, Integer globalDisplayIndex,
+                                       Integer globalDisplayLineIndex) {
+                return new Stat<>(this, name, displayName, ((Double) defaultValue), displayIndex, displayLineIndex,
+                        globalDisplay, globalDisplayIndex, globalDisplayLineIndex) {
                     @Override
                     public Double add(Double value, Double add) {
                         return value + add;
@@ -155,8 +240,11 @@ public abstract class Stat<Value> implements Comparator<Value> {
             }
 
             @Override
-            public Stat<Float> asStat(String name, String displayName, Object defaultValue, Integer displayIndex, Integer displayLineIndex) {
-                return new Stat<>(this, name, displayName, ((Float) defaultValue), displayIndex, displayLineIndex) {
+            public Stat<Float> asStat(String name, String displayName, Object defaultValue, Integer displayIndex,
+                                      Integer displayLineIndex, Boolean globalDisplay, Integer globalDisplayIndex,
+                                      Integer globalDisplayLineIndex) {
+                return new Stat<>(this, name, displayName, ((Float) defaultValue), displayIndex, displayLineIndex,
+                        globalDisplay, globalDisplayIndex, globalDisplayLineIndex) {
                     @Override
                     public Float add(Float value, Float add) {
                         return value + add;
@@ -208,8 +296,11 @@ public abstract class Stat<Value> implements Comparator<Value> {
             }
 
             @Override
-            public Stat<String> asStat(String name, String displayName, Object defaultValue, Integer displayIndex, Integer displayLineIndex) {
-                return new Stat<>(this, name, displayName, ((String) defaultValue), displayIndex, displayLineIndex) {
+            public Stat<String> asStat(String name, String displayName, Object defaultValue, Integer displayIndex,
+                                       Integer displayLineIndex, Boolean globalDisplay, Integer globalDisplayIndex,
+                                       Integer globalDisplayLineIndex) {
+                return new Stat<>(this, name, displayName, ((String) defaultValue), displayIndex, displayLineIndex,
+                        globalDisplay, globalDisplayIndex, globalDisplayLineIndex) {
                     @Override
                     public String add(String s, String add) {
                         return s + add;
@@ -252,64 +343,9 @@ public abstract class Stat<Value> implements Comparator<Value> {
 
         public abstract Stat<ValueType> asStat(String name, String displayName, Object defaultValueType);
 
-        public abstract Stat<ValueType> asStat(String name, String displayName, Object defaultValueType, Integer displayIndex, Integer displayLineIndex);
-    }
-
-    private final Type<Value> type;
-    private final String name;
-    private final String displayName;
-    private final Value defaultValue;
-
-    private final Integer displayIndex;
-    private final Integer displayLineIndex;
-
-    public Stat(Type<Value> type, String name, String displayName, Value defaultValue, Integer displayIndex, Integer displayLineIndex) {
-        this.type = type;
-        this.name = name;
-        this.defaultValue = defaultValue;
-        this.displayName = displayName;
-        this.displayIndex = displayIndex;
-        this.displayLineIndex = displayLineIndex;
-    }
-
-    public Stat(Type<Value> type, String name, String displayName, Value defaultValue) {
-        this(type, name, displayName, defaultValue, null, null);
-    }
-
-    public Type<Value> getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Value getDefaultValue() {
-        return defaultValue;
-    }
-
-    public String getDefaultValueAsString() {
-        return this.type.valueToString(this.defaultValue);
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public Integer getDisplayIndex() {
-        return displayIndex;
-    }
-
-    public Integer getDisplayLineIndex() {
-        return displayLineIndex;
-    }
-
-    public String getValueAsString(Value value) {
-        return this.type.valueToString(value);
-    }
-
-    public String getValueAsDisplay(Value value) {
-        return this.type.valueToDisplay(value);
+        public abstract Stat<ValueType> asStat(String name, String displayName, Object defaultValueType,
+                                               Integer displayIndex, Integer displayLineIndex, Boolean globalDisplay,
+                                               Integer globalDisplayIndex, Integer globalDisplayLineIndex);
     }
 
     public abstract Value add(Value value, Value add);
