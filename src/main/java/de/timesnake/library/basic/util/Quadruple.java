@@ -53,7 +53,8 @@ public class Quadruple<A, B, C, D> {
         if (obj == null) return false;
         if (!(obj instanceof Quadruple<?, ?, ?, ?>)) return false;
         if (this == obj) return true;
-        return Objects.equals(this.getA(), ((Tuple<?, ?>) obj).getA()) && Objects.equals(this.getB(), ((Tuple<?, ?>) obj).getB()) && Objects.equals(this.getC(), ((Triple<?, ?, ?>) obj).getC()) && Objects.equals(this.getD(), ((Quadruple<?, ?, ?, ?>) obj).getD());
+        return Objects.equals(this.getA(), ((Tuple<?, ?>) obj).getA()) && Objects.equals(this.getB(),
+                ((Tuple<?, ?>) obj).getB()) && Objects.equals(this.getC(), ((Triple<?, ?, ?>) obj).getC()) && Objects.equals(this.getD(), ((Quadruple<?, ?, ?, ?>) obj).getD());
 
     }
 

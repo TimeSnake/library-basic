@@ -39,7 +39,8 @@ public class Tuple<A, B> {
         if (obj == null) return false;
         if (!(obj instanceof Tuple<?, ?>)) return false;
         if (this == obj) return true;
-        return Objects.equals(this.getA(), ((Tuple<?, ?>) obj).getA()) && Objects.equals(this.getB(), ((Tuple<?, ?>) obj).getB());
+        return Objects.equals(this.getA(), ((Tuple<?, ?>) obj).getA()) && Objects.equals(this.getB(),
+                ((Tuple<?, ?>) obj).getB());
     }
 
     @Override
