@@ -1,39 +1,31 @@
 package de.timesnake.library.basic.util.statistics;
 
-import de.timesnake.library.basic.util.Tuple;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class Statistic implements Statisticable {
+public class Statistic {
 
-    private final Map<String, Tuple<Stat<?>, Object>> statsByName = new HashMap<>();
+    protected final Map<String, Stat<?>> statsByName = new HashMap<>();
 
-    @Override
-    public <Value> Value getStat(Stat<Value> type) {
-        Tuple<Stat<?>, ?> statTuple = this.statsByName.get(type.getName());
-        return statTuple != null ? (Value) statTuple.getB() : type.getDefaultValue();
+    public <Value> Stat<Value> addStat(StatType<Value> type) {
+        return this.addStat(type, type.getDefaultValue());
     }
 
-    @Override
-    public <Value> void setStat(Stat<Value> type, Value value) {
-        this.statsByName.put(type.getName(), new Tuple<>(type, value));
+    public <Value> Stat<Value> addStat(StatType<Value> type, Value value) {
+        Stat<Value> stat = new Stat<>(type, value);
+        this.statsByName.put(type.getName(), stat);
+        return stat;
     }
 
-    @Override
-    public <Value> Value increaseStat(Stat<Value> type, Value value) {
-        Value result = type.add(this.getStat(type), value);
-        this.setStat(type, result);
-        return result;
+    public <Value> Stat<Value> addStat(StatType<Value> type, Map<StatPeriod, Value> values) {
+        Stat<Value> stat = new Stat<>(type, values);
+        this.statsByName.put(type.getName(), stat);
+        return stat;
     }
 
-    public <Value> boolean higherStat(Stat<Value> type, Value value) {
-        int higher = type.compare(this.getStat(type), value);
-        if (higher < 0) {
-            this.setStat(type, value);
-            return true;
-        } else {
-            return false;
-        }
+    public <Value> Stat<Value> getStat(StatType<Value> type) {
+        if (type == null) return null;
+        return (Stat<Value>) this.statsByName.get(type.getName());
     }
+
 }
