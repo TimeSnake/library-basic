@@ -9,9 +9,14 @@ plugins {
 
 repositories {
     mavenLocal()
+    mavenCentral()
     maven {
         url = uri('https://repo.maven.apache.org/maven2/')
     }
+}
+
+dependencies {
+    compileOnly 'net.kyori:adventure-api:4.11.0'
 }
 
 group = 'de.timesnake'
