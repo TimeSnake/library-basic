@@ -78,14 +78,14 @@ public abstract class Status {
     }
 
     public static class Server extends Status {
-        public static final Server OFFLINE = new Server("offline");
-        public static final Server LAUNCHING = new Server("launching");
-        public static final Server LOADING = new Server("loading");
-        public static final Server ONLINE = new Server("online");
-        public static final Server SERVICE = new Server("service");
-        public static final Server IN_GAME = new Server("ingame");
-        public static final Server PRE_GAME = new Server("pregame");
-        public static final Server POST_GAME = new Server("postgame");
+        public static final Server OFFLINE = new Server("offline", false);
+        public static final Server LAUNCHING = new Server("launching", false);
+        public static final Server LOADING = new Server("loading", false);
+        public static final Server ONLINE = new Server("online", true);
+        public static final Server SERVICE = new Server("service", true);
+        public static final Server IN_GAME = new Server("ingame", true);
+        public static final Server PRE_GAME = new Server("pregame", true);
+        public static final Server POST_GAME = new Server("postgame", true);
         public static final HashMap<String, Server> STATUS_BY_STRING = new HashMap<>();
 
         public static Status.Server[] values() {
@@ -104,8 +104,11 @@ public abstract class Status {
             }
         }
 
-        Server(String status) {
+        private final boolean running;
+
+        Server(String status, boolean running) {
             super(status);
+            this.running = running;
         }
 
         @Override
@@ -116,6 +119,10 @@ public abstract class Status {
         @Override
         public String getSimpleName() {
             return name;
+        }
+
+        public boolean isRunning() {
+            return this.running;
         }
     }
 
