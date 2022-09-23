@@ -45,4 +45,8 @@ public class MultiKeyMap<K1, K2, V> {
     public Collection<V> values() {
         return this.valuesByK1.values();
     }
+
+    public int size() {
+        return this.valuesByK1.size();
+    }
 }
