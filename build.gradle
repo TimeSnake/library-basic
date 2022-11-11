@@ -12,10 +12,10 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'net.kyori:adventure-api:4.11.0'
+    compileOnly project.adventure_api
 }
 
-group = 'de.timesnake'
+group = project.group
 version = '1.0-SNAPSHOT'
 description = 'library-basic'
 java.sourceCompatibility = 1.17
