@@ -1,5 +1,5 @@
 /*
- * timesnake.library-basic.main
+ * workspace.library-basic.main
  * Copyright (C) 2022 timesnake
  *
  * This program is free software; you can redistribute it and/or
@@ -35,8 +35,12 @@ public class LogHelper {
     }
 
     public static Logger getLogger(String name, Level defaultLevel) {
+        return getLogger(name, defaultLevel, true);
+    }
+
+    public static Logger getLogger(String name, Level defaultLevel, boolean useParentHandlers) {
         Logger logger = Logger.getLogger(name);
-        logger.setUseParentHandlers(true);
+        logger.setUseParentHandlers(useParentHandlers);
         logger.setLevel(defaultLevel);
         LOGGER_BY_NAME.put(name, logger);
         return logger;
