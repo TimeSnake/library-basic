@@ -1,5 +1,5 @@
 /*
- * library-basic.main
+ * workspace.library-basic.main
  * Copyright (C) 2022 timesnake
  *
  * This program is free software; you can redistribute it and/or
@@ -19,13 +19,13 @@
 package de.timesnake.library.basic.util;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.function.BiFunction;
 
 public class MultiKeyMap<K1, K2, V> {
 
-    private final HashMap<K1, V> valuesByK1 = new HashMap<>();
-    private final HashMap<K2, V> valuesByK2 = new HashMap<>();
+    private final LinkedHashMap<K1, V> valuesByK1 = new LinkedHashMap<>();
+    private final LinkedHashMap<K2, V> valuesByK2 = new LinkedHashMap<>();
 
     public void put(K1 key1, K2 key2, V value) {
         this.valuesByK1.put(key1, value);
