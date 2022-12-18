@@ -1,5 +1,5 @@
 /*
- * library-basic.main
+ * workspace.library-basic.main
  * Copyright (C) 2022 timesnake
  *
  * This program is free software; you can redistribute it and/or
@@ -18,31 +18,31 @@
 
 package de.timesnake.library.basic.util;
 
-import java.util.HashMap;
+import net.kyori.adventure.util.Index;
 
 public abstract class Status {
 
-    public static final String DIVIDER = "$";
+    public static final String DIVIDER = "_";
 
-    public static <T extends Status> T parseStatus(String name) {
+    public static <T extends Status> T valueOf(String name) {
+        if (name == null) {
+            return null;
+        }
+
         String[] names = name.split(DIVIDER);
 
         if (names.length < 2) {
             return null;
         }
 
-        switch (names[0]) {
-            case User.PREFIX:
-                return (T) User.parseValue(names[1]);
-            case Server.PREFIX:
-                return (T) Server.parseValue(names[1]);
-            case Permission.PREFIX:
-                return (T) Permission.parseValue(names[1]);
-            case Ticket.PREFIX:
-                return (T) Ticket.parseValue(names[1]);
-        }
+        return switch (names[0]) {
+            case User.PREFIX -> (T) User.valueOf(names[1]);
+            case Server.PREFIX -> (T) Server.valueOf(names[1]);
+            case Permission.PREFIX -> (T) Permission.valueOf(names[1]);
+            case Ticket.PREFIX -> (T) Ticket.valueOf(names[1]);
+            default -> null;
+        };
 
-        return null;
     }
 
     protected final String name;
@@ -51,9 +51,21 @@ public abstract class Status {
         this.name = name;
     }
 
-    public abstract String getName();
+    /**
+     * Gets name
+     * <p>Must not be longer than 20 characters.</p>
+     *
+     * @return
+     */
+    public String getName() {
+        return this.getType() + DIVIDER + this.getShortName();
+    }
 
-    public abstract String getSimpleName();
+    public String getShortName() {
+        return this.name;
+    }
+
+    protected abstract String getType();
 
     public static class User extends Status {
         public static final User OFFLINE = new User("offline");
@@ -62,36 +74,27 @@ public abstract class Status {
         public static final User OUT_GAME = new User("outgame");
         public static final User PRE_GAME = new User("pregame");
         public static final User SPECTATOR = new User("spectator");
-        public static final HashMap<String, User> STATUS_BY_STRING = new HashMap<>();
 
-        public static Status.User[] values() {
-            return new Status.User[]{OFFLINE, ONLINE, IN_GAME, OUT_GAME, PRE_GAME, SPECTATOR};
+        public static User valueOf(String name) {
+            return STATUS_BY_STRING.value(name.replace(PREFIX + DIVIDER, ""));
         }
 
-        public static User parseValue(String statusValue) {
-            return STATUS_BY_STRING.get(statusValue.replace(PREFIX + DIVIDER, ""));
+        public static User[] values() {
+            return VALUES;
         }
+
+        private static final User[] VALUES = {OFFLINE, ONLINE, IN_GAME, OUT_GAME, PRE_GAME, SPECTATOR};
+        private static final Index<String, User> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
 
         private static final String PREFIX = "user";
-
-        static {
-            for (Status.User status : values()) {
-                STATUS_BY_STRING.put(status.getSimpleName(), status);
-            }
-        }
 
         User(String status) {
             super(status);
         }
 
         @Override
-        public String getName() {
-            return PREFIX + DIVIDER + this.name;
-        }
-
-        @Override
-        public String getSimpleName() {
-            return name;
+        protected String getType() {
+            return PREFIX;
         }
     }
 
@@ -104,23 +107,19 @@ public abstract class Status {
         public static final Server IN_GAME = new Server("ingame", true);
         public static final Server PRE_GAME = new Server("pregame", true);
         public static final Server POST_GAME = new Server("postgame", true);
-        public static final HashMap<String, Server> STATUS_BY_STRING = new HashMap<>();
 
-        public static Status.Server[] values() {
-            return new Status.Server[]{OFFLINE, LAUNCHING, LOADING, ONLINE, SERVICE, IN_GAME, PRE_GAME, POST_GAME};
+        public static Server valueOf(String name) {
+            return STATUS_BY_STRING.value(name.replace(PREFIX + DIVIDER, ""));
         }
 
-        public static Server parseValue(String statusValue) {
-            return STATUS_BY_STRING.get(statusValue.replace(PREFIX + DIVIDER, ""));
+        public static Server[] values() {
+            return VALUES;
         }
+
+        private static final Server[] VALUES = {OFFLINE, LAUNCHING, LOADING, ONLINE, SERVICE, IN_GAME, PRE_GAME, POST_GAME};
+        private static final Index<String, Server> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
 
         private static final String PREFIX = "server";
-
-        static {
-            for (Status.Server status : values()) {
-                STATUS_BY_STRING.put(status.getSimpleName(), status);
-            }
-        }
 
         private final boolean running;
 
@@ -129,18 +128,13 @@ public abstract class Status {
             this.running = running;
         }
 
-        @Override
-        public String getName() {
-            return PREFIX + DIVIDER + this.name;
-        }
-
-        @Override
-        public String getSimpleName() {
-            return name;
-        }
-
         public boolean isRunning() {
-            return this.running;
+            return running;
+        }
+
+        @Override
+        protected String getType() {
+            return PREFIX;
         }
     }
 
@@ -148,36 +142,27 @@ public abstract class Status {
         public static final Permission ONLINE = new Permission("online");
         public static final Permission SERVICE = new Permission("service");
         public static final Permission IN_GAME = new Permission("ingame");
-        public static final HashMap<String, Permission> STATUS_BY_STRING = new HashMap<>();
 
-        public static Status.Permission[] values() {
-            return new Status.Permission[]{ONLINE, SERVICE, IN_GAME};
+        public static Permission valueOf(String name) {
+            return STATUS_BY_STRING.value(name.replace(PREFIX + DIVIDER, ""));
         }
 
-        public static Permission parseValue(String statusValue) {
-            return STATUS_BY_STRING.get(statusValue.replace(PREFIX + DIVIDER, ""));
+        public static Permission[] values() {
+            return VALUES;
         }
+
+        private static final Permission[] VALUES = {ONLINE, SERVICE, IN_GAME};
+        private static final Index<String, Permission> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
 
         private static final String PREFIX = "permission";
-
-        static {
-            for (Status.Permission status : values()) {
-                STATUS_BY_STRING.put(status.getSimpleName(), status);
-            }
-        }
 
         Permission(String status) {
             super(status);
         }
 
         @Override
-        public String getName() {
-            return PREFIX + DIVIDER + this.name;
-        }
-
-        @Override
-        public String getSimpleName() {
-            return name;
+        protected String getType() {
+            return PREFIX;
         }
 
     }
@@ -189,23 +174,19 @@ public abstract class Status {
         public static final Ticket SOLVED = new Ticket("solved", "Solved", "§c");
         public static final Ticket ADMIN = new Ticket("admin", "Admin", "§9");
         public static final Ticket DELETE = new Ticket("deleted", "Delete", "§4");
-        public static final HashMap<String, Ticket> STATUS_BY_STRING = new HashMap<>();
 
-        public static Status.Ticket[] values() {
-            return new Status.Ticket[]{OPEN, IN_PROCESS, SOLVED, ADMIN, DELETE};
+        public static Ticket valueOf(String name) {
+            return STATUS_BY_STRING.value(name.replace(PREFIX + DIVIDER, ""));
         }
 
-        public static Ticket parseValue(String statusValue) {
-            return STATUS_BY_STRING.get(statusValue.replace(PREFIX + DIVIDER, ""));
+        public static Ticket[] values() {
+            return VALUES;
         }
+
+        private static final Ticket[] VALUES = {OPEN, IN_PROCESS, SOLVED, ADMIN, DELETE};
+        private static final Index<String, Ticket> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
 
         private static final String PREFIX = "ticket";
-
-        static {
-            for (Status.Ticket status : values()) {
-                STATUS_BY_STRING.put(status.getSimpleName(), status);
-            }
-        }
 
         private final String name;
         private final String chatColor;
@@ -225,13 +206,8 @@ public abstract class Status {
         }
 
         @Override
-        public String getName() {
-            return PREFIX + DIVIDER + name;
-        }
-
-        @Override
-        public String getSimpleName() {
-            return name;
+        protected String getType() {
+            return PREFIX;
         }
     }
 
