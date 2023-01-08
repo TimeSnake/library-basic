@@ -54,6 +54,7 @@ public abstract class Status {
     protected abstract String getType();
 
     public static class User extends Status {
+
         public static final User OFFLINE = new User("offline");
         public static final User ONLINE = new User("online");
         public static final User IN_GAME = new User("ingame");
@@ -62,6 +63,9 @@ public abstract class Status {
         public static final User SPECTATOR = new User("spectator");
 
         public static User valueOf(String name) {
+            if (name == null) {
+                return null;
+            }
             return STATUS_BY_STRING.value(name.replace(PREFIX + DIVIDER, ""));
         }
 
@@ -69,8 +73,10 @@ public abstract class Status {
             return VALUES;
         }
 
-        private static final User[] VALUES = {OFFLINE, ONLINE, IN_GAME, OUT_GAME, PRE_GAME, SPECTATOR};
-        private static final Index<String, User> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
+        private static final User[] VALUES = {OFFLINE, ONLINE, IN_GAME, OUT_GAME, PRE_GAME,
+                SPECTATOR};
+        private static final Index<String, User> STATUS_BY_STRING = Index.create(
+                Status::getShortName, VALUES);
 
         private static final String PREFIX = "user";
 
@@ -85,6 +91,7 @@ public abstract class Status {
     }
 
     public static class Server extends Status {
+
         public static final Server OFFLINE = new Server("offline", false);
         public static final Server LAUNCHING = new Server("launching", false);
         public static final Server LOADING = new Server("loading", false);
@@ -95,6 +102,9 @@ public abstract class Status {
         public static final Server POST_GAME = new Server("postgame", true);
 
         public static Server valueOf(String name) {
+            if (name == null) {
+                return null;
+            }
             return STATUS_BY_STRING.value(name.replace(PREFIX + DIVIDER, ""));
         }
 
@@ -102,8 +112,10 @@ public abstract class Status {
             return VALUES;
         }
 
-        private static final Server[] VALUES = {OFFLINE, LAUNCHING, LOADING, ONLINE, SERVICE, IN_GAME, PRE_GAME, POST_GAME};
-        private static final Index<String, Server> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
+        private static final Server[] VALUES = {OFFLINE, LAUNCHING, LOADING, ONLINE, SERVICE,
+                IN_GAME, PRE_GAME, POST_GAME};
+        private static final Index<String, Server> STATUS_BY_STRING = Index.create(
+                Status::getShortName, VALUES);
 
         private static final String PREFIX = "server";
 
@@ -125,11 +137,15 @@ public abstract class Status {
     }
 
     public static class Permission extends Status {
+
         public static final Permission ONLINE = new Permission("online");
         public static final Permission SERVICE = new Permission("service");
         public static final Permission IN_GAME = new Permission("ingame");
 
         public static Permission valueOf(String name) {
+            if (name == null) {
+                return null;
+            }
             return STATUS_BY_STRING.value(name.replace(PREFIX + DIVIDER, ""));
         }
 
@@ -138,7 +154,8 @@ public abstract class Status {
         }
 
         private static final Permission[] VALUES = {ONLINE, SERVICE, IN_GAME};
-        private static final Index<String, Permission> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
+        private static final Index<String, Permission> STATUS_BY_STRING = Index.create(
+                Status::getShortName, VALUES);
 
         private static final String PREFIX = "permission";
 
@@ -155,6 +172,7 @@ public abstract class Status {
 
 
     public static class Ticket extends Status {
+
         public static final Ticket OPEN = new Ticket("open", "Open", "§2");
         public static final Ticket IN_PROCESS = new Ticket("in_process", "In Process", "§6");
         public static final Ticket SOLVED = new Ticket("solved", "Solved", "§c");
@@ -162,6 +180,9 @@ public abstract class Status {
         public static final Ticket DELETE = new Ticket("deleted", "Delete", "§4");
 
         public static Ticket valueOf(String name) {
+            if (name == null) {
+                return null;
+            }
             return STATUS_BY_STRING.value(name.replace(PREFIX + DIVIDER, ""));
         }
 
@@ -170,7 +191,8 @@ public abstract class Status {
         }
 
         private static final Ticket[] VALUES = {OPEN, IN_PROCESS, SOLVED, ADMIN, DELETE};
-        private static final Index<String, Ticket> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
+        private static final Index<String, Ticket> STATUS_BY_STRING = Index.create(
+                Status::getShortName, VALUES);
 
         private static final String PREFIX = "ticket";
 
