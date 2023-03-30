@@ -12,5 +12,6 @@ public interface Server {
     String SUPPORT_EMAIL = "support@mail.timesnake.de";
     String DISCORD_LINK = "https://discord.gg/YRCZhFVE9z";
     String PATREON_LINK = "https://www.patreon.com/user?u=59222684";
+    String DEFAULT_TEXTURE_PACK = "https://api.timesnake.de/data/minecraft/resource_packs/texture_pack_default.zip";
 
 }
