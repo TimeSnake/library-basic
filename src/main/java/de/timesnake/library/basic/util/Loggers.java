@@ -10,13 +10,10 @@ import java.util.logging.Logger;
 public interface Loggers {
 
     Logger BUKKIT = LogHelper.getLogger("Bukkit", Level.INFO);
-    Logger PROXY = LogHelper.getLogger("Proxy", Level.INFO);
 
     Logger NETWORK = LogHelper.getLogger("Network", Level.INFO);
 
-    Logger TIME_COINS = LogHelper.getLogger("Coins", Level.INFO);
     Logger PRIVATE_MESSAGES = LogHelper.getLogger("Msg", Level.INFO);
-    Logger MAILS = LogHelper.getLogger("Mails", Level.INFO);
     Logger CHATS = LogHelper.getLogger("Chats", Level.INFO);
 
     Logger SCOREBOARD = LogHelper.getLogger("Scoreboard");
