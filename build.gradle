@@ -11,6 +11,7 @@ dependencies {
     compileOnly project(':library-chat')
 
     compileOnly project.adventure_api
+    compileOnly project.gson
 }
 
 group = project.group
