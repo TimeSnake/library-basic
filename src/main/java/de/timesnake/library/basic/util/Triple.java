@@ -44,11 +44,18 @@ public class Triple<A, B, C> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (!(obj instanceof Triple<?, ?, ?>)) return false;
-        if (this == obj) return true;
-        return Objects.equals(this.getA(), ((Tuple<?, ?>) obj).getA()) && Objects.equals(this.getB(),
-                ((Tuple<?, ?>) obj).getB()) && Objects.equals(this.getC(), ((Triple<?, ?, ?>) obj).getC());
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Triple<?, ?, ?>)) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        return Objects.equals(this.getA(), ((Triple<?, ?, ?>) obj).getA())
+                && Objects.equals(this.getB(), ((Triple<?, ?, ?>) obj).getB())
+                && Objects.equals(this.getC(), ((Triple<?, ?, ?>) obj).getC());
     }
 
     @Override

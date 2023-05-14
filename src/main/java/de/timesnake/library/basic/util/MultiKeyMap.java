@@ -5,10 +5,12 @@
 package de.timesnake.library.basic.util;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.function.BiFunction;
+import org.jetbrains.annotations.NotNull;
 
-public class MultiKeyMap<K1, K2, V> {
+public class MultiKeyMap<K1, K2, V> implements Iterable<V> {
 
     private final LinkedHashMap<K1, V> valuesByK1 = new LinkedHashMap<>();
     private final LinkedHashMap<K2, V> valuesByK2 = new LinkedHashMap<>();
@@ -52,5 +54,11 @@ public class MultiKeyMap<K1, K2, V> {
 
     public int size() {
         return this.valuesByK1.size();
+    }
+
+    @NotNull
+    @Override
+    public Iterator<V> iterator() {
+        return this.valuesByK1.values().stream().iterator();
     }
 }
