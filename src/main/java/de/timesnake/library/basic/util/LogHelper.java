@@ -10,68 +10,73 @@ import java.nio.file.Path;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 public class LogHelper {
 
-    public static final Map<String, Logger> LOGGER_BY_NAME = new HashMap<>();
+  public static final Map<String, Logger> LOGGER_BY_NAME = new HashMap<>();
 
-    public static Logger getLogger(String name) {
-        return getLogger(name, Level.WARNING);
+  public static Logger getLogger(String name) {
+    return getLogger(name, Level.WARNING);
+  }
+
+  public static Logger getLogger(String name, Level defaultLevel) {
+    return getLogger(name, defaultLevel, true);
+  }
+
+  public static Logger getLogger(String name, Level defaultLevel, boolean useParentHandlers) {
+    Logger logger = Logger.getLogger(name);
+    logger.setUseParentHandlers(useParentHandlers);
+    logger.setLevel(defaultLevel);
+    LOGGER_BY_NAME.put(name, logger);
+    return logger;
+  }
+
+  public static Logger logToFile(Logger logger) {
+    Path path = Path.of("plugins", "debug");
+    try {
+      Files.createDirectories(path);
+    } catch (IOException ignored) {
     }
 
-    public static Logger getLogger(String name, Level defaultLevel) {
-        return getLogger(name, defaultLevel, true);
+    path = path.resolve("debug.log");
+
+    if (!path.toFile().exists()) {
+      try {
+        path.toFile().createNewFile();
+      } catch (IOException ignored) {
+      }
     }
 
-    public static Logger getLogger(String name, Level defaultLevel, boolean useParentHandlers) {
-        Logger logger = Logger.getLogger(name);
-        logger.setUseParentHandlers(useParentHandlers);
-        logger.setLevel(defaultLevel);
-        LOGGER_BY_NAME.put(name, logger);
-        return logger;
+    FileHandler fh = null;
+    try {
+      fh = new FileHandler("plugins/debug/debug.log");
+    } catch (IOException ignored) {
     }
+    logger.addHandler(fh);
 
-    public static Logger logToFile(Logger logger) {
-        Path path = Path.of("plugins", "debug");
-        try {
-            Files.createDirectories(path);
-        } catch (IOException ignored) {
-        }
+    CustomFormatter formatter = new CustomFormatter();
+    fh.setFormatter(formatter);
+    return logger;
+  }
 
-        path = path.resolve("debug.log");
+  public static class CustomFormatter extends Formatter {
 
-        if (!path.toFile().exists()) {
-            try {
-                path.toFile().createNewFile();
-            } catch (IOException ignored) {
-            }
-        }
+    private static final String format = "%1tH:%<tM:%<tS %2$-7s %3$s (%4$s) %5$s%6$s%n";
+    private static final Date date = new Date();
 
-        FileHandler fh = null;
-        try {
-            fh = new FileHandler("plugins/debug/debug.log");
-        } catch (IOException ignored) {
-        }
-        logger.addHandler(fh);
+    @Override
+    public String format(LogRecord record) {
+      date.setTime(record.getMillis());
 
-        CustomFormatter formatter = new CustomFormatter();
-        fh.setFormatter(formatter);
-        return logger;
+      String message = formatMessage(record);
+
+      return String.format(format, date, record.getLevel().getName(), record.getLoggerName(), "",
+          message, "");
     }
-
-    public static class CustomFormatter extends Formatter {
-
-        private static final String format = "%1tH:%<tM:%<tS %2$-7s %3$s (%4$s) %5$s%6$s%n";
-        private static final Date date = new Date();
-
-        @Override
-        public String format(LogRecord record) {
-            date.setTime(record.getMillis());
-
-            String message = formatMessage(record);
-
-            return String.format(format, date, record.getLevel().getName(), record.getLoggerName(), "", message, "");
-        }
-    }
+  }
 }

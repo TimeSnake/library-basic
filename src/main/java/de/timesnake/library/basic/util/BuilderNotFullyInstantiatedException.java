@@ -6,7 +6,7 @@ package de.timesnake.library.basic.util;
 
 public class BuilderNotFullyInstantiatedException extends RuntimeException {
 
-    public BuilderNotFullyInstantiatedException(String message) {
-        super(message);
-    }
+  public BuilderNotFullyInstantiatedException(String message) {
+    super(message);
+  }
 }
