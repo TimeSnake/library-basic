@@ -1,17 +1,17 @@
 repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url = uri 'https://repo.maven.apache.org/maven2/'
-    }
+  mavenLocal()
+  mavenCentral()
+  maven {
+    url = uri 'https://repo.maven.apache.org/maven2/'
+  }
 }
 
 dependencies {
 
-    compileOnly project(':library-chat')
+  compileOnly project(':library-chat')
 
-    compileOnly project.adventure_api
-    compileOnly project.gson
+  compileOnly project.adventure_api
+  compileOnly project.gson
 }
 
 group = project.group
