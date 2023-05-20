@@ -34,6 +34,7 @@ public interface Loggers {
 
   Logger PACKETS = LogHelper.getLogger("Packets");
   Logger CHANNEL = LogHelper.getLogger("Channel");
+  Logger DATABASE = LogHelper.getLogger("Database");
 
   Logger ANTI_CHEAT = LogHelper.getLogger("AntiCheat");
   Logger WARPS = LogHelper.getLogger("Warps");
