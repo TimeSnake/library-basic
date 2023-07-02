@@ -10,18 +10,16 @@ import java.nio.file.Path;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.FileHandler;
-import java.util.logging.Formatter;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public class LogHelper {
+
+  private static final boolean DEBUG_MODE = false;
 
   public static final Map<String, Logger> LOGGER_BY_NAME = new HashMap<>();
 
   public static Logger getLogger(String name) {
-    return getLogger(name, Level.WARNING);
+    return DEBUG_MODE ? getLogger(name, Level.INFO) : getLogger(name, Level.WARNING);
   }
 
   public static Logger getLogger(String name, Level defaultLevel) {

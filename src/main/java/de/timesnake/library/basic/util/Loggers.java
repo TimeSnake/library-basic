@@ -19,6 +19,7 @@ public interface Loggers {
 
   Logger SCOREBOARD = LogHelper.getLogger("Scoreboard");
   Logger COMMAND = LogHelper.getLogger("Command");
+  Logger ENTITY = LogHelper.getLogger("Entity");
   Logger PERMISSIONS = LogHelper.getLogger("Permissions");
 
   Logger USERS = LogHelper.getLogger("Users");
