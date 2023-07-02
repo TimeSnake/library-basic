@@ -1,18 +1,18 @@
+plugins {
+  id 'java-library'
+  id 'maven-publish'
+}
+
 group = project.group
-version = '1.1-SNAPSHOT'
-archivesBaseName = 'library-basic'
+version = '1-1.1'
 var projectId = 6
 
 repositories {
   mavenLocal()
   mavenCentral()
-  maven {
-    url = uri 'https://repo.maven.apache.org/maven2/'
-  }
 }
 
 dependencies {
-
   compileOnly project(':library-chat')
 
   compileOnly project.adventure_api
