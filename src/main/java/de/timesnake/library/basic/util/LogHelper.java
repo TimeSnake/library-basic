@@ -30,7 +30,7 @@ public class LogHelper {
     Logger logger = Logger.getLogger(name);
     logger.setUseParentHandlers(useParentHandlers);
     logger.setLevel(defaultLevel);
-    LOGGER_BY_NAME.put(name, logger);
+    LOGGER_BY_NAME.put(name.toLowerCase(), logger);
     return logger;
   }
 
