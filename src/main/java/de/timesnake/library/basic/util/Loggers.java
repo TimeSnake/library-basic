@@ -35,7 +35,6 @@ public interface Loggers {
 
   Logger PACKETS = LogHelper.getLogger("Packets");
   Logger CHANNEL = LogHelper.getLogger("Channel");
-  Logger DATABASE = LogHelper.getLogger("Database");
 
   Logger ANTI_CHEAT = LogHelper.getLogger("AntiCheat");
   Logger WARPS = LogHelper.getLogger("Warps");
@@ -44,5 +43,7 @@ public interface Loggers {
   Logger LOBBY = LogHelper.getLogger("Lobby");
   Logger LOUNGE = LogHelper.getLogger("Lounge");
   Logger LOUNGE_BRIDGE = LogHelper.getLogger("LoungeBridge");
+
+  Logger WEB = LogHelper.getLogger("Web");
 
 }
