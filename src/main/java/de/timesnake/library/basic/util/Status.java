@@ -6,7 +6,9 @@ package de.timesnake.library.basic.util;
 
 import net.kyori.adventure.util.Index;
 
-public abstract class Status {
+import java.io.Serializable;
+
+public abstract class Status implements Serializable {
 
   public static final String DIVIDER = "_";
 
@@ -51,9 +53,14 @@ public abstract class Status {
     return this.name;
   }
 
+  @Override
+  public String toString() {
+    return this.getShortName();
+  }
+
   protected abstract String getType();
 
-  public static class User extends Status {
+  public static class User extends Status implements Serializable {
 
     public static final User OFFLINE = new User("offline");
     public static final User ONLINE = new User("online");
@@ -90,7 +97,7 @@ public abstract class Status {
     }
   }
 
-  public static class Server extends Status {
+  public static class Server extends Status implements Serializable {
 
     public static final Server OFFLINE = new Server("offline", false);
     public static final Server LAUNCHING = new Server("launching", false);
