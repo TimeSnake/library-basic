@@ -4,10 +4,11 @@
 
 package de.timesnake.library.basic.util;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
-public class Tuple<A, B> {
+public class Tuple<A, B> implements Serializable {
 
   private A a;
   private B b;
@@ -56,5 +57,13 @@ public class Tuple<A, B> {
   @Override
   public int hashCode() {
     return Objects.hash(this.a, this.b);
+  }
+
+  @Override
+  public String toString() {
+    return "Tuple{" +
+        "a=" + a +
+        ", b=" + b +
+        '}';
   }
 }
