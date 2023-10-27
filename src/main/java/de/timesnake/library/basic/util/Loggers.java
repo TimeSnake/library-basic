@@ -21,6 +21,7 @@ public interface Loggers {
   Logger COMMAND = LogHelper.getLogger("Command");
   Logger ENTITY = LogHelper.getLogger("Entity");
   Logger PERMISSIONS = LogHelper.getLogger("Permissions");
+  Logger PUNISH = LogHelper.getLogger("Punish", Level.INFO);
 
   Logger USERS = LogHelper.getLogger("Users");
   Logger GROUPS = LogHelper.getLogger("Groups");

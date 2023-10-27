@@ -7,6 +7,7 @@ package de.timesnake.library.basic.util;
 import net.kyori.adventure.util.Index;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public abstract class Status implements Serializable {
 
@@ -58,6 +59,19 @@ public abstract class Status implements Serializable {
     return this.getShortName();
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Status status = (Status) o;
+    return Objects.equals(this.getName(), status.getName());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.getName());
+  }
+
   protected abstract String getType();
 
   public static class User extends Status implements Serializable {
@@ -80,10 +94,8 @@ public abstract class Status implements Serializable {
       return VALUES;
     }
 
-    private static final User[] VALUES = {OFFLINE, ONLINE, IN_GAME, OUT_GAME, PRE_GAME,
-        SPECTATOR};
-    private static final Index<String, User> STATUS_BY_STRING = Index.create(
-        Status::getShortName, VALUES);
+    private static final User[] VALUES = {OFFLINE, ONLINE, IN_GAME, OUT_GAME, PRE_GAME, SPECTATOR};
+    private static final Index<String, User> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
 
     private static final String PREFIX = "user";
 
@@ -119,10 +131,8 @@ public abstract class Status implements Serializable {
       return VALUES;
     }
 
-    private static final Server[] VALUES = {OFFLINE, LAUNCHING, LOADING, ONLINE, SERVICE,
-        IN_GAME, PRE_GAME, POST_GAME};
-    private static final Index<String, Server> STATUS_BY_STRING = Index.create(
-        Status::getShortName, VALUES);
+    private static final Server[] VALUES = {OFFLINE, LAUNCHING, LOADING, ONLINE, SERVICE, IN_GAME, PRE_GAME, POST_GAME};
+    private static final Index<String, Server> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
 
     private static final String PREFIX = "server";
 
@@ -161,8 +171,7 @@ public abstract class Status implements Serializable {
     }
 
     private static final Permission[] VALUES = {ONLINE, SERVICE, IN_GAME};
-    private static final Index<String, Permission> STATUS_BY_STRING = Index.create(
-        Status::getShortName, VALUES);
+    private static final Index<String, Permission> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
 
     private static final String PREFIX = "permission";
 
@@ -198,8 +207,7 @@ public abstract class Status implements Serializable {
     }
 
     private static final Ticket[] VALUES = {OPEN, IN_PROCESS, SOLVED, ADMIN, DELETE};
-    private static final Index<String, Ticket> STATUS_BY_STRING = Index.create(
-        Status::getShortName, VALUES);
+    private static final Index<String, Ticket> STATUS_BY_STRING = Index.create(Status::getShortName, VALUES);
 
     private static final String PREFIX = "ticket";
 
