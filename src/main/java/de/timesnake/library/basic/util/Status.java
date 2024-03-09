@@ -111,14 +111,14 @@ public abstract class Status implements Serializable {
 
   public static class Server extends Status implements Serializable {
 
-    public static final Server OFFLINE = new Server("offline", false);
-    public static final Server LAUNCHING = new Server("launching", false);
-    public static final Server LOADING = new Server("loading", false);
-    public static final Server ONLINE = new Server("online", true);
-    public static final Server SERVICE = new Server("service", true);
-    public static final Server IN_GAME = new Server("ingame", true);
-    public static final Server PRE_GAME = new Server("pregame", true);
-    public static final Server POST_GAME = new Server("postgame", true);
+    public static final Server OFFLINE = new Server("offline", false, false);
+    public static final Server LAUNCHING = new Server("launching", false, false);
+    public static final Server LOADING = new Server("loading", false, false);
+    public static final Server ONLINE = new Server("online", true, false);
+    public static final Server SERVICE = new Server("service", true, false);
+    public static final Server IN_GAME = new Server("ingame", true, true);
+    public static final Server PRE_GAME = new Server("pregame", true, true);
+    public static final Server POST_GAME = new Server("postgame", true, true);
 
     public static Server valueOf(String name) {
       if (name == null) {
@@ -137,14 +137,20 @@ public abstract class Status implements Serializable {
     private static final String PREFIX = "server";
 
     private final boolean running;
+    private final boolean gameState;
 
-    Server(String status, boolean running) {
+    Server(String status, boolean running, boolean gameState) {
       super(status);
       this.running = running;
+      this.gameState = gameState;
     }
 
     public boolean isRunning() {
       return running;
+    }
+
+    public boolean isGameState() {
+      return gameState;
     }
 
     @Override
