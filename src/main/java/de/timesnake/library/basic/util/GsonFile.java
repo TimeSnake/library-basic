@@ -6,11 +6,9 @@ package de.timesnake.library.basic.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.io.*;
+import java.lang.reflect.Type;
 
 public class GsonFile {
 
@@ -81,6 +79,19 @@ public class GsonFile {
 
     try {
       return this.gson.fromJson(new FileReader(file), clazz);
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  public <T> T read(Type type) {
+    if (!file.exists()) {
+      return null;
+    }
+
+    try {
+      return this.gson.fromJson(new FileReader(file), type);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
       return null;
