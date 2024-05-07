@@ -6,47 +6,29 @@ package de.timesnake.library.basic.util;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.function.Consumer;
 
 public class UserSet<User> extends HashSet<User> {
 
-  public static final HashSet<UserSet<?>> LISTS = new HashSet<>();
-
-  private Consumer<User> onAdd;
-  private Consumer<User> onRemove;
+  public static final HashSet<UserSet<?>> SETS = new HashSet<>();
 
   public UserSet() {
-    LISTS.add(this);
+    SETS.add(this);
   }
 
   public UserSet(Collection<? extends User> collection) {
     super(collection);
-    LISTS.add(this);
+    SETS.add(this);
   }
 
-  public void onAdd(Consumer<User> consumer) {
-    this.onAdd = consumer;
-  }
-
-  public void onRemove(Consumer<User> consumer) {
-    this.onRemove = consumer;
-  }
-
-  @Override
-  public boolean add(User user) {
-    boolean result = super.add(user);
-    if (result && this.onAdd != null) {
-      this.onAdd.accept(user);
+  public boolean removeAuto(Object user) {
+    boolean removed = super.remove(user);
+    if (removed) {
+      this.onAutoRemove((User) user);
     }
-    return result;
+    return removed;
   }
 
-  @Override
-  public boolean remove(Object o) {
-    boolean result = super.remove(o);
-    if (result && this.onAdd != null) {
-      this.onRemove.accept((User) o);
-    }
-    return result;
+  public void onAutoRemove(User user) {
+
   }
 }
