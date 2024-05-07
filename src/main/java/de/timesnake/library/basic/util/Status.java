@@ -192,14 +192,13 @@ public abstract class Status implements Serializable {
 
   }
 
-
   public static class Ticket extends Status {
 
-    public static final Ticket OPEN = new Ticket("open", "Open", "§2");
-    public static final Ticket IN_PROCESS = new Ticket("in_process", "In Process", "§6");
-    public static final Ticket SOLVED = new Ticket("solved", "Solved", "§c");
-    public static final Ticket ADMIN = new Ticket("admin", "Admin", "§9");
-    public static final Ticket DELETE = new Ticket("deleted", "Delete", "§4");
+    public static final Ticket OPEN = new Ticket("open", "Open");
+    public static final Ticket IN_PROCESS = new Ticket("in_process", "In Process");
+    public static final Ticket SOLVED = new Ticket("solved", "Solved");
+    public static final Ticket ADMIN = new Ticket("admin", "Admin");
+    public static final Ticket DELETE = new Ticket("deleted", "Delete");
 
     public static Ticket valueOf(String name) {
       if (name == null) {
@@ -218,20 +217,14 @@ public abstract class Status implements Serializable {
     private static final String PREFIX = "ticket";
 
     private final String name;
-    private final String chatColor;
 
-    Ticket(String status, String name, String chatColor) {
+    Ticket(String status, String name) {
       super(status);
       this.name = name;
-      this.chatColor = chatColor;
     }
 
     public String getDisplayName() {
       return name;
-    }
-
-    public String getChatColor() {
-      return chatColor;
     }
 
     @Override
