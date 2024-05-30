@@ -6,9 +6,11 @@ package de.timesnake.library.basic.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.util.List;
 
 public class GsonFile {
 
@@ -96,5 +98,10 @@ public class GsonFile {
       e.printStackTrace();
       return null;
     }
+  }
+
+  public <T> List<T> readList(Class<T> clazz) {
+    TypeToken<?> typeToken = TypeToken.getParameterized(List.class, clazz);
+    return this.read(typeToken.getType());
   }
 }
