@@ -6,11 +6,16 @@ package de.timesnake.library.basic.util;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class RandomList<E> extends LinkedList<E> {
 
   private static final Random DEFAULT_RANDOM = new Random();
+
+  public static <E> E anyOf(E[] entries) {
+    return anyOf(List.of(entries), DEFAULT_RANDOM);
+  }
 
   public static <E> E anyOf(Collection<E> entries) {
     return anyOf(entries, DEFAULT_RANDOM);
@@ -28,6 +33,11 @@ public class RandomList<E> extends LinkedList<E> {
 
   public RandomList(Collection<E> entries, Random random) {
     super(entries);
+    this.random = random;
+  }
+
+  public RandomList(E[] entries, Random random) {
+    super(List.of(entries));
     this.random = random;
   }
 
