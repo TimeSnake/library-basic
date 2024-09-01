@@ -7,7 +7,7 @@ plugins {
 
 
 group = "de.timesnake"
-version = '1.6.1'
+version = '2.0.0'
 var projectId = 6
 
 repositories {
@@ -29,14 +29,6 @@ dependencies {
 
   compileOnly 'org.apache.logging.log4j:log4j-api:2.22.1'
   compileOnly 'org.apache.logging.log4j:log4j-core:2.22.1'
-}
-
-configurations.configureEach {
-  resolutionStrategy.dependencySubstitution {
-    if (project.parent != null) {
-      substitute module("de.timesnake:library-chat") using project(":library-chat")
-    }
-  }
 }
 
 publishing {
@@ -62,12 +54,12 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
   options.encoding = 'UTF-8'
-  options.release = 17
+  options.release = 21
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+      languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
