@@ -24,8 +24,6 @@ repositories {
 }
 
 dependencies {
-  compileOnly "de.timesnake:library-chat:1.+"
-
   compileOnly "net.kyori:adventure-api:4.11.0"
   compileOnly "com.google.code.gson:gson:2.10.1"
 
