@@ -30,6 +30,9 @@ public final class IntegerStat extends StatType<Integer> {
 
   @Override
   public Integer add(Integer value, Integer add) {
+    if (value == null) {
+      value = this.getDefaultValue();
+    }
     return value + add;
   }
 
