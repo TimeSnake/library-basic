@@ -46,6 +46,9 @@ public final class PercentStat extends StatType<Float> {
 
   @Override
   public Float add(Float value, Float add) {
+    if (value == null) {
+      value = this.getDefaultValue();
+    }
     return value + add;
   }
 

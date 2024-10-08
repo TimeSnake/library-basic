@@ -37,8 +37,11 @@ public final class StringStat extends StatType<String> {
   }
 
   @Override
-  public String add(String s, String add) {
-    return s + add;
+  public String add(String value, String add) {
+    if (value == null) {
+      value = this.getDefaultValue();
+    }
+    return value + add;
   }
 
   @Override

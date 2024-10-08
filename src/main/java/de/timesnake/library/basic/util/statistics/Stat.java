@@ -55,39 +55,38 @@ public class Stat<Value> {
     }
   }
 
-  public Value increase(StatPeriod period, Value value) {
+  public Value increaseBy(StatPeriod period, Value value) {
     if (value == null) {
       return this.valueByPeriod.get(period);
     }
     return this.valueByPeriod.compute(period, (p, v) -> this.type.add(v, value));
   }
 
-  public Value higher(StatPeriod period, Value value) {
+  public Value updateToMax(StatPeriod period, Value value) {
     if (value == null) {
       return this.valueByPeriod.get(period);
     }
-    return this.valueByPeriod.compute(period,
-        (p, v) -> this.type.compare(v, value) >= 0 ? v : value);
+    return this.valueByPeriod.compute(period, (p, v) -> this.type.compare(v, value) >= 0 ? v : value);
   }
 
-  public Map<StatPeriod, Value> increaseAll(Value value) {
+  public Map<StatPeriod, Value> increaseAllBy(Value value) {
     if (value == null) {
       return this.valueByPeriod;
     }
     Map<StatPeriod, Value> values = new HashMap<>();
     for (StatPeriod period : StatPeriod.values()) {
-      values.put(period, this.increase(period, value));
+      values.put(period, this.increaseBy(period, value));
     }
     return values;
   }
 
-  public Map<StatPeriod, Value> higherAll(Value value) {
+  public Map<StatPeriod, Value> updateAllToMax(Value value) {
     if (value == null) {
       return this.valueByPeriod;
     }
     Map<StatPeriod, Value> values = new HashMap<>();
     for (StatPeriod period : StatPeriod.values()) {
-      values.put(period, this.higher(period, value));
+      values.put(period, this.updateToMax(period, value));
     }
     return values;
   }

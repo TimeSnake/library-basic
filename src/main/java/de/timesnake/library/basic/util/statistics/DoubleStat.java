@@ -46,6 +46,9 @@ public final class DoubleStat extends StatType<Double> {
 
   @Override
   public Double add(Double value, Double add) {
+    if (value == null) {
+      value = this.getDefaultValue();
+    }
     return value + add;
   }
 
