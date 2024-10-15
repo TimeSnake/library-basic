@@ -6,13 +6,13 @@ package de.timesnake.library.basic.util;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 public class UserMap<User, Value> extends HashMap<User, Value> {
 
-  public static final LinkedList<UserMap<?, ?>> MAPS = new LinkedList<>();
+  public static final ArrayList<UserMap<?, ?>> MAPS = new ArrayList<>();
 
   public UserMap() {
     MAPS.add(this);
