@@ -4,12 +4,14 @@
 
 package de.timesnake.library.basic.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 public class UserSet<User> extends HashSet<User> {
 
-  public static final HashSet<UserSet<?>> SETS = new HashSet<>();
+  public static final List<UserSet<?>> SETS = new ArrayList<>();
 
   public UserSet() {
     SETS.add(this);
