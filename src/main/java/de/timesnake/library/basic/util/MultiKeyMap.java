@@ -11,8 +11,18 @@ import java.util.function.BiFunction;
 
 public class MultiKeyMap<K1, K2, V> implements Iterable<V> {
 
-  private final Map<K1, V> valuesByK1 = new HashMap<>();
-  private final Map<K2, V> valuesByK2 = new HashMap<>();
+  protected final Map<K1, V> valuesByK1;
+  protected final Map<K2, V> valuesByK2;
+
+  public MultiKeyMap() {
+    this.valuesByK1 = new HashMap<>();
+    this.valuesByK2 = new HashMap<>();
+  }
+
+  protected MultiKeyMap(Map<K1, V> valuesByK1, Map<K2, V> valuesByK2) {
+    this.valuesByK1 = valuesByK1;
+    this.valuesByK2 = valuesByK2;
+  }
 
   public void put(K1 key1, K2 key2, V value) {
     this.valuesByK1.put(key1, value);
