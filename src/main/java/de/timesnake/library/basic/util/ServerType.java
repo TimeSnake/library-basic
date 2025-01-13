@@ -9,7 +9,7 @@ import net.kyori.adventure.util.Index;
 public final class ServerType extends Type {
 
   public static final ServerType LOBBY = new ServerType("lobby");
-  public static final ServerType GAME = new ServerType("game");
+  public static final ServerType GAME = new ServerType("non_tmp_game");
   public static final ServerType TEMP_GAME = new ServerType("tmp_game");
   public static final ServerType BUILD = new ServerType("build");
   public static final ServerType LOUNGE = new ServerType("lounge");
