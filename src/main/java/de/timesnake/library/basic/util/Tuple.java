@@ -7,6 +7,8 @@ package de.timesnake.library.basic.util;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Tuple<A, B> implements Serializable {
 
@@ -37,6 +39,26 @@ public class Tuple<A, B> implements Serializable {
 
   public void setB(B b) {
     this.b = b;
+  }
+
+  public Tuple<A, B> applyOnA(Consumer<A> consumer) {
+    consumer.accept(this.a);
+    return this;
+  }
+
+  public Tuple<A, B> applyOnB(Consumer<B> consumer) {
+    consumer.accept(this.b);
+    return this;
+  }
+
+  public Tuple<A, B> apply(Consumer<A> consumerA, Consumer<B> consumerB) {
+    consumerA.accept(this.a);
+    consumerB.accept(this.b);
+    return this;
+  }
+
+  public <C, D> Tuple<C, D> map(Function<A, C> mapperA, Function<B, D> mapperB) {
+    return new Tuple<>(mapperA.apply(this.a), mapperB.apply(this.b));
   }
 
   @Override
