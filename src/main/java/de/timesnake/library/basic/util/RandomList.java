@@ -4,12 +4,12 @@
 
 package de.timesnake.library.basic.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class RandomList<E> extends LinkedList<E> {
+public class RandomList<E> extends ArrayList<E> {
 
   private static final Random DEFAULT_RANDOM = new Random();
 
@@ -22,7 +22,12 @@ public class RandomList<E> extends LinkedList<E> {
   }
 
   public static <E> E anyOf(Collection<E> entries, Random random) {
-    return new RandomList<>(entries, random).getRandom();
+    return new RandomList<>(entries, random).getAny();
+  }
+
+  @SafeVarargs
+  public static <E> RandomList<E> of(E... values) {
+    return new RandomList<>(values, DEFAULT_RANDOM);
   }
 
   private final Random random;
@@ -36,12 +41,21 @@ public class RandomList<E> extends LinkedList<E> {
     this.random = random;
   }
 
+  public RandomList() {
+    super();
+    this.random = DEFAULT_RANDOM;
+  }
+
   public RandomList(E[] entries, Random random) {
     super(List.of(entries));
     this.random = random;
   }
 
-  public E getRandom() {
+  public E getAny() {
     return this.get(this.random.nextInt(this.size()));
+  }
+
+  public E popAny() {
+    return this.remove(this.random.nextInt(this.size()));
   }
 }
