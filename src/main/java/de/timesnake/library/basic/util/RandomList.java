@@ -30,6 +30,23 @@ public class RandomList<E> extends ArrayList<E> {
     return new RandomList<>(values, DEFAULT_RANDOM);
   }
 
+  @SafeVarargs
+  public static <E> RandomList<E> nOf(int n, E... values) {
+    RandomList<E> list = new RandomList<>();
+    for (int i = 0; i < n; i++) {
+      list.add(values[DEFAULT_RANDOM.nextInt(values.length)]);
+    }
+    return list;
+  }
+
+  public static <E> RandomList<E> nOf(int n, List<E> values) {
+    RandomList<E> list = new RandomList<>();
+    for (int i = 0; i < n; i++) {
+      list.add(values.get(DEFAULT_RANDOM.nextInt(values.size())));
+    }
+    return list;
+  }
+
   private final Random random;
 
   public RandomList(Collection<E> entries) {
