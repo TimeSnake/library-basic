@@ -7,7 +7,7 @@ plugins {
 
 
 group = "de.timesnake"
-version = "2.1.1"
+version = "3.0.0"
 var projectId = 6
 
 repositories {
@@ -21,11 +21,24 @@ repositories {
 }
 
 dependencies {
-    compileOnly("net.kyori:adventure-api:4.11.0")
-    compileOnly("com.google.code.gson:gson:2.10.1")
+    api("net.kyori:adventure-api:4.11.0")
+    api("com.google.code.gson:gson:2.10.1")
 
-    compileOnly("org.apache.logging.log4j:log4j-api:2.22.1")
-    compileOnly("org.apache.logging.log4j:log4j-core:2.22.1")
+    api("org.apache.logging.log4j:log4j-api:2.22.1")
+    api("org.apache.logging.log4j:log4j-core:2.22.1")
+}
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution.all {
+        requested.let {
+            if (it is ModuleComponentSelector && it.group == "de.timesnake") {
+                val targetProject = findProject(":${it.module}")
+                if (targetProject != null) {
+                    useTarget(targetProject)
+                }
+            }
+        }
+    }
 }
 
 publishing {
