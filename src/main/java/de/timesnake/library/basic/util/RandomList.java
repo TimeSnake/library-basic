@@ -4,10 +4,10 @@
 
 package de.timesnake.library.basic.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
+import java.util.function.Consumer;
 
 public class RandomList<E> extends ArrayList<E> {
 
@@ -74,5 +74,12 @@ public class RandomList<E> extends ArrayList<E> {
 
   public E popAny() {
     return this.remove(this.random.nextInt(this.size()));
+  }
+
+  @NotNull
+  @Override
+  public Iterator<E> iterator() {
+    Collections.shuffle(this);
+    return super.iterator();
   }
 }
